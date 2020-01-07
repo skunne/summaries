@@ -63,7 +63,7 @@
 \title{Summaries of a few papers on mitral valve prolapse and cross-modal image registration}
 \author{Stephan}
 %\date{} % Activate to display a given date or no date (if empty),
-         % otherwise the current date is printed 
+         % otherwise the current date is printed
 
 \begin{document}
 \maketitle
@@ -82,7 +82,7 @@
 %      \item Random Sample Consensus (RanSaC) algorithm \cite{fischler:ransac}
 %      \item Cross-modal point cloud registration \cite{huang:kinect}
 %    \end{itemize}
-%  
+%
 %    \item Intensity-based registration
 %        \begin{itemize}
 %           \item Electron microscopy to light microscopy \cite{acosta:intensity}
@@ -146,7 +146,7 @@ An algorithm to register two sets of points. The basic principle is that it is e
 %    \item For every point $y \in Y$, find the point $x(y) \in X$ that is closest to $y$
 %    \item Find the transformation $q$ that best maps $Y$ to $\{ x(y),\, y \in Y \}$
 %    \item Apply $q$ to $Y$
-%  \end{itemize} 
+%  \end{itemize}
 %\end{itemize}
 
     \subsubsection{ Model to point set: Random Sample Consensus (RanSaC) algorithm \linebreak[4] \cite{fischler:ransac}}
@@ -204,7 +204,7 @@ See Algorithm \ref{algo:kinect}.
   \label{fig:kinect}
 \end{figure}
 
-Mostly focused on point clouds obtained from these two sources: 1) Kinect; 2) reconstruction from multiple 2D RGB cameras. 
+Mostly focused on point clouds obtained from these two sources: 1) Kinect; 2) reconstruction from multiple 2D RGB cameras.
 \begin{algorithm}
 \caption{Point Cloud Registration \cite{huang:kinect}}
 \label{algo:kinect}
@@ -221,8 +221,9 @@ Mostly focused on point clouds obtained from these two sources: 1) Kinect; 2) re
 \end{algorithm}
 % Input images $\rightarrow$ Scale normalization $\rightarrow$ structure extraction $\rightarrow$ graph construction $\rightarrow$ optimization $\rightarrow$ transformation $\rightarrow$ result. See diagram p. 4. of that paper.
 
-The micro and macro structure extraction consists in clustering voxels (3d pixels) into supervoxels. But this makes sense for a 3d image, not a 3d point-cloud? Look for the sourcecode of the algorithm in the Point Cloud Library \cite{rusu:pclib}.
-  
+The micro and macro structure extraction consists in clustering voxels (3d pixels) into supervoxels. Look for the sourcecode of the clustering algorithm in the Point Cloud Library \cite{rusu:pclib}. For the graph matching, see \cite{zhou:graphmatching, zaslavskiy:graphmatching, frank:quadratic}.
+
+
   \subsection{Intensity-based registration}
     \subsubsection{Using intensity for the similarity measure}
 Need to find more references about this.
@@ -275,12 +276,12 @@ Proposes an unsupervised deep learning approach to directly learn the basis filt
 Not multimodal: only MR images. But the training is unsupervised.
 
     \subsubsection{Using a convolutional neural network to compute the similarity measure in multi-modal registration \cite{simonovsky:crossmodalfeatures}}
-Proposes a metric based on a convolutional neural network, to replace Mutual Information as a similarity measure. The network can be trained from scratch even from a few aligned image pairs. The metric is validated on intersubject deformable registration. 
+Proposes a metric based on a convolutional neural network, to replace Mutual Information as a similarity measure. The network can be trained from scratch even from a few aligned image pairs. The metric is validated on intersubject deformable registration.
 
 Supervised, but requires ``only a few'' aligned image pairs. Multi-modal?
 
     \subsubsection{Using stacked auto-encoders to compute the similarity measure in multi-modal registration \cite{cheng:deepsimilarity}}
-Trains a binary classifier to learn the correspondence of two image patches. The classification output is transformed to a continuous probability value, then used as the similarity score. Proposes to utilise multi-modal stacked denoising autoencoder to effectively pre-train the deep neural network. Train and test the proposed metric using sampled corresponding/non-corresponding computed tomography and magnetic resonance head image patches from a same subject. 
+Trains a binary classifier to learn the correspondence of two image patches. The classification output is transformed to a continuous probability value, then used as the similarity score. Proposes to utilise multi-modal stacked denoising autoencoder to effectively pre-train the deep neural network. Train and test the proposed metric using sampled corresponding/non-corresponding computed tomography and magnetic resonance head image patches from a same subject.
 
 Multi-modal: MR and CT.
 
@@ -383,9 +384,9 @@ Given two successive frames, classify all pairs (cell from first frame, cell fro
 %
 % Input images $\rightarrow$ Scale normalization $\rightarrow$ structure extraction $\rightarrow$ graph construction $\rightarrow$ optimization $\rightarrow$ transformation $\rightarrow$ result. See diagram p. 4. of that paper.
 %
-%Mostly focused on point clouds obtained from these two sources: 1) Kinect; 2) reconstruction from multiple 2D RGB cameras. 
+%Mostly focused on point clouds obtained from these two sources: 1) Kinect; 2) reconstruction from multiple 2D RGB cameras.
 %
-%\section{Registration using image analogies 
+%\section{Registration using image analogies
 %\cite{cao:analogies}}
 %
 %Uses machine learning on a training dataset of pairs of images from two different modalities to learn two dictionaries $D_A$ and $D_B$ of small filters for each modality.
