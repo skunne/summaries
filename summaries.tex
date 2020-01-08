@@ -221,7 +221,8 @@ Mostly focused on point clouds obtained from these two sources: 1) Kinect; 2) re
 \end{algorithm}
 % Input images $\rightarrow$ Scale normalization $\rightarrow$ structure extraction $\rightarrow$ graph construction $\rightarrow$ optimization $\rightarrow$ transformation $\rightarrow$ result. See diagram p. 4. of that paper.
 
-The micro and macro structure extraction consists in clustering voxels (3d pixels) into supervoxels. Look for the sourcecode of the clustering algorithm in the Point Cloud Library \cite{rusu:pclib}. For the graph matching, see \cite{zhou:graphmatching, zaslavskiy:graphmatching, frank:quadratic, gertz:ooqp}.
+The micro and macro structure extraction consists in clustering voxels (3d pixels) into supervoxels. Look for the sourcecode of the clustering algorithm in the Point Cloud Library \cite{rusu:pclib}.
+To solve the graph matching problem, see \cite{zhou:graphmatching, cour:graphmatching, zaslavskiy:graphmatching, frank:quadratic, gertz:ooqp}.
 
 
   \subsection{Intensity-based registration}
