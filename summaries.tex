@@ -224,6 +224,23 @@ Mostly focused on point clouds obtained from these two sources: 1) Kinect; 2) re
 The micro and macro structure extraction consists in clustering voxels (3d pixels) into supervoxels. Look for the sourcecode of the clustering algorithm in the Point Cloud Library \cite{rusu:pclib}.
 To solve the graph matching problem, see \cite{zhou:graphmatching, cour:graphmatching, zaslavskiy:graphmatching, frank:quadratic, gertz:ooqp}.
 
+    \subsubsection{Point cloud registration with outliers \cite{papazov:rotations}}
+Note that ICP amounts to searching for a rigid transformation $T$ which minimizes the sum of distances between closest points, for two pointclouds $D$ and $M$:
+$$\sum_{x \in D} d(T(x),M)$$
+
+Propose to search instead for a rigid transformation $T$ by minimising instead the sum: $$\sum_{x \in D}-\varphi(d(T(x), M))$$
+where $-\varphi$ % $: \mathbb{R^+} \rightarrow \mathbb{R}$
+is a function which is both increasing and bounded, satisfying $-\varphi(0) = -1$ and $\lim_{d \rightarrow +\infty} -\varphi(d) = 0$. The function $-\varphi$ becomes almost constant for large values of the distance $d$; hence points that are very badly matched cannot have a strong incidence on the minimisation. In a way, the algorithm proposed in this paper is a variant of ICP robust to outliers. It could also be used to detect and remove outliers?
+
+The used formula for $\varphi$ is:
+$$\varphi(d) = \frac{1}{1+\alpha d}$$
+for some parameter $\alpha$.
+
+The parameter $\alpha$ can be chosen as a function of two parameters $\d_0$ and $\delta$ so that $\varphi(d) < \delta$ as soon as $d > d_0$, using the formula:
+$$\alpha = \frac{1-\delta}{\delta {d_0}^2}$$
+In their implementation, they choose $\delta = 0.1$ and $d_0 = \min(\text{width,depth,height})$ where width, depth and height are the dimensions of the bouding box of the point cloud.
+
+This paper also gives very cool formulae to perform dichotomy on the space of 3d rotations, and to select "uniformly at random" rotations in this space or in the dichotomy subspaces.
 
   \subsection{Intensity-based registration}
     \subsubsection{Using intensity for the similarity measure}
