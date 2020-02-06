@@ -236,9 +236,9 @@ The used formula for $\varphi$ is:
 $$\varphi(d) = \frac{1}{1+\alpha d}$$
 for some parameter $\alpha$.
 
-The parameter $\alpha$ can be chosen as a function of two parameters $\d_0$ and $\delta$ so that $\varphi(d) < \delta$ as soon as $d > d_0$, using the formula:
+The parameter $\alpha$ can be chosen as a function of two parameters $d_0$ and $\delta$ so that $\varphi(d) < \delta$ as soon as $d > d_0$, using the formula:
 $$\alpha = \frac{1-\delta}{\delta {d_0}^2}$$
-In their implementation, they choose $\delta = 0.1$ and $d_0 = \min(\text{width,depth,height})$ where width, depth and height are the dimensions of the bouding box of the point cloud.
+In their implementation, they choose $\delta = 0.1$ and set $d_0$ to $1/4$ of the minimum of the three dimensions of the bouding box of the point cloud.
 
 This paper also gives very cool formulae to perform dichotomy on the space of 3d rotations, and to select "uniformly at random" rotations in this space or in the dichotomy subspaces.
 
