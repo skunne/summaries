@@ -24,12 +24,6 @@ $(NAME): $(BUILD) $(REF) $(SRC)
 clean:
 	rm -f $(addprefix $(BUILD)/*,.aux .log .nav .out .snm .toc)
 	#latexmk -CA
-#rm -f $(BUILD)/*.aux $(BUILD)/*.log $(BUILD)/*.nav
-#rm -f $(BUILD)/*.log
-#rm -f $(BUILD)/*.nav
-#rm -f $(BUILD)/*.out
-#rm -f $(BUILD)/*.snm
-#rm -f $(BUILD)/*.toc
 
 #fclean: clean
 #	rm -f $(NAME)
