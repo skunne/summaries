@@ -1,0 +1,13 @@
+chen:icp
+rusinkiewics:icp
+wohlkinger:esf
+wachter:ipopt
+conte:gmsurvey
+zaslavskiy:graphmatching
+frank:quadratic
+gertz:ooqp
+cour:graphmatching
+scott:associatingfeatures
+hartmann:marchingtriangles
+ibanez:itk
+wells:mutual
