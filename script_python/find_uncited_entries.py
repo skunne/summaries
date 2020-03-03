@@ -1,4 +1,4 @@
-import sys      # sys.argv
+import sys      # sys.argv, sys.stderr
 import pybtex.database
 
 def get_list_of_cited_keys(texfile):
@@ -10,8 +10,8 @@ def get_list_of_cited_keys(texfile):
                 pos = pos + 6
                 endpos = line.find('}', pos)
                 if endpos == -1:
-                    print('!!WARNING!! found \\cite{ with no matching } on line:')
-                    print('    ', line)
+                    print('!!WARNING!! found \\cite{ with no matching } on line:', file=sys.stderr)
+                    print('    ', line, file=sys.stderr)
                 keys = line[pos:endpos].split(',')
                 list_of_keys.extend(keys)
                 pos = line.find("\\cite{", endpos)

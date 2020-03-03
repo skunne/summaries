@@ -33,11 +33,11 @@ clean:
 #	rm -f $(NAME)
 
 #re: fclean all
-re: clean all
+re: clean 2
 
 2:
 	$(CC) $(SRC)
-	$(BIBCC) $(REF)
+	$(BIBCC) $(BUILD)/summaries
 	$(CC) $(SRC)
 	$(CC) $(SRC)
 	mv $(BUILD)/$(NAME) $(NAME)
