@@ -37,9 +37,9 @@ def print_only_uncited(list_of_cited_keys, biblio):
 def print_usage():
     print('SYNOPSIS')
     print()
-    print('{} [-h | --help]'.format(sys.argv[0]))
-    print('    print this help message and exit')
-    print()
+    # print('{} [-h | --help]'.format(sys.argv[0]))
+    # print('    print this help message and exit')
+    # print()
     print('{} texfile bibfile'.format(sys.argv[0]))
     print('    Parse a latex file and a bibliography file.')
     print('    Print the list of bibliography entries')
