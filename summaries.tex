@@ -194,7 +194,7 @@ The RanSaC algorithm: fit a model to a set of points. Assumes the model can be f
 %\end{itemize}
 
     \subsubsection{Cross-modal point cloud registration \cite{huang:kinect}}
-Proposes an algorithm for registration of 3d clouds of points, with more than a thousand points: possibly tens of thousands or millions of points. The two clouds may have been generated using different kinds of sensors, and thus present differences, such as inequal point density or missing parts of the represented object: see Fig. \ref{fig:kinect}. The idea behind the algorithm is to extract the ``macro'' ``micro'' structures from the images, and use them to build a graph for each image representing those structures. The point cloud registration problem becomes a graph matching problem. The structure extraction algorithm is adapted from a previous paper \cite{papon:supervoxels}.
+Proposes an algorithm for registration of 3d clouds of points, with more than a thousand points: possibly tens of thousands or millions of points. The two clouds may have been generated using different kinds of sensors, and thus present differences, such as inequal point density or missing parts of the represented object: see Fig. \ref{fig:kinect}. The idea behind the algorithm is to extract the ``macro'' ``micro'' structures from the images, and use them to build a graph for each image representing those structures. The point cloud registration problem becomes a graph matching problem. The macro structure extraction algorithm is supervoxel clustering~\cite{papon:supervoxels}. The micro structure extraction consists in adding features on the vertices of the graph; these features are Ensemble Shape Functions~\cite{wohlkinger:esf} of each cluster.
 See Algorithm \ref{algo:kinect}.
 
 \begin{figure}
@@ -212,9 +212,10 @@ Mostly focused on point clouds obtained from these two sources: 1) Kinect; 2) re
   \REQUIRE two 3d point clouds
   \ENSURE registration of the two clouds
   \STATE normalize the scales of the two images
-  \STATE extract the macro and micro structures of each point cloud
-  \STATE build a graph for each point cloud, representing its structure
+  \STATE supervoxel clustering: build a graph for each point cloud
+  \STATE add features on each vertex by computed the ensemble shape function of its cluster of points
   \STATE find best matching between the two graphs
+  \STATE remove mismatched vertices ("outliers") using ICP/RanSaC
   \STATE deduce the 3d transformation corresponding to the graph matching
   \RETURN the 3d transformation
 \end{algorithmic}
@@ -303,7 +304,8 @@ Trains a binary classifier to learn the correspondence of two image patches. The
 
 Multi-modal: MR and CT.
 
-\section{Analysis of cell images}
+\section{Image segmentation}
+\subsection{Cell segmentation}
 See Fig. \ref{fig:cells}.
 \begin{figure}[h!]
   \centering
@@ -311,7 +313,6 @@ See Fig. \ref{fig:cells}.
   \caption{Common tasks in analysis of cell images. Illustration from \cite{kan:machine}.}
   \label{fig:cells}
 \end{figure}
-  \subsection{Cell segmentation}
     \subsubsection{Colour threshold and pixel adjacency}
 Apply filters to remove noise, blur, and non-cell objects. Use an intensity threshold to classify pixels as part of a cell or part of the background. Use connected component analysis to separate non-touching cells. If cells overlap, use a ``watershed'' technique to separate them.
 
@@ -334,9 +335,9 @@ A contest on kaggle to devise algorithms for cell segmentation. The algorithms a
 
 
 
-  \subsection{Tracking and constructing lineage trees}
+    \subsubsection{Tracking and constructing lineage trees}
 Cells are observed over time. Need to track individual cells over time. Cells might overlap in some frames; a cell might divide through mitosis.
-    \subsubsection{Classification problem}
+    \paragraph{Classification problem over two successive segmented frames}
 Given two successive frames, classify all pairs (cell from first frame, cell from second frame) as ``same cell'' or ``distinct cells'' \cite{kan:machine}. See Fig. \ref{fig:tracking}.
 
 \begin{figure}[h!]
@@ -346,7 +347,26 @@ Given two successive frames, classify all pairs (cell from first frame, cell fro
   \label{fig:tracking}
 \end{figure}
 
-
+  \subsection{Pixel classification}
+    \subsubsection{IlastiK~\cite{berg:ilastik}}
+      A program in python which implements supervised pixel classification, as well as a few other segmentation problems. The algorithm for pixel classification in IlastiK is described in Algorithm~\ref{algo:ilastikpixel}.
+      \begin{algorithm}
+      \caption{IlastiK Pixel Classification~\cite{berg:ilastik}}
+      \label{algo:ilastikpixel}
+      \begin{algorithmic}
+        \REQUIRE an image or a sequence of images
+        \ENSURE classification of each pixel in the images
+        \STATE Choose a set of predefined convolutional filters, such as edge detection or Laplacian of Gaussian
+        \STATE Compute features for every pixel
+        \STATE Ask the user to "paint" some pixels with a label, using a paintbrush
+        \STATE Build a random forest using the computed features for each pixel and the user-provided labels
+        \STATE Apply the random forest to every pixel in the image
+        \STATE Show the classification result to the user; ask them to paint some labels again to improve classification
+        \STATE Loop until the user is satisfied with the classification
+        \RETURN the whole pixel classifier, features + random forest, to be applied directly to other images
+      \end{algorithmic}
+      \end{algorithm}
+      The program provides a paintbrush-like interface to "paint" some pixels to mark them with a training label. 3d images can be viewed by slices along three axes. There is a two-step variant of pixel classification based on Tu and Bai's autocontext algorithm~\cite{tubai:autocontext}. IlastiK also provides a few other functionalities, such as object classification, or tracking of moving segmented objects across frames.
 
 
 \section{Other applications of deep learning in medical imaging \cite{litjens:deeplearning}}

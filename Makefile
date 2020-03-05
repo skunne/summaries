@@ -27,16 +27,16 @@ $(UNCITED): $(SRC) $(REF) $(FIND_UNCITED)
 	$(FIND_UNCITED) $(SRC) $(REF) > $(UNCITED)
 
 clean:
-	rm -f $(addprefix $(BUILD)/*,.aux .log .nav .out .snm .toc)
+	rm -f -- $(addprefix $(BUILD)/*,.aux .log .nav .out .snm .toc)
 	#latexmk -CA
 
 #fclean: clean
-#	rm -f $(NAME)
+#	rm -f -- $(NAME)
 
 #re: fclean all
 re: clean 2
 
-2:
+2: $(UNCITED)
 	$(CC) $(SRC)
 	$(BIBCC) $(BUILD)/summaries
 	$(CC) $(SRC)
