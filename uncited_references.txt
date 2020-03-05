@@ -1,4 +1,3 @@
-rusinkiewics:icp
 wachter:ipopt
 conte:gmsurvey
 scott:associatingfeatures
