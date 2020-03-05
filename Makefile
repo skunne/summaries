@@ -1,6 +1,7 @@
 BUILD = build
 NAME = summaries.pdf
 UNCITED = uncited_references.txt
+FIND_UNCITED = script_python/find_uncited_entries.py
 #SRCDIR = src
 #SRCFILES = main.tex
 #SRC = $(addprefix $(SRCDIR)/,$(SRCFILES))
@@ -18,12 +19,12 @@ $(BUILD):
 	mkdir $(BUILD)
 
 $(NAME): $(BUILD) $(REF) $(SRC)
-	$(BIBCC) $(BUILD)/summaries
 	$(CC) $(SRC)
+	$(BIBCC) $(BUILD)/summaries
 	mv $(BUILD)/$(NAME) $(NAME)
 
-$(UNCITED): $(SRC) $(REF)
-	python3 script_python/find_uncited_entries.py $(SRC) $(REF) > $(UNCITED)
+$(UNCITED): $(SRC) $(REF) $(FIND_UNCITED)
+	$(FIND_UNCITED) $(SRC) $(REF) > $(UNCITED)
 
 clean:
 	rm -f $(addprefix $(BUILD)/*,.aux .log .nav .out .snm .toc)

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys      # sys.argv, sys.stderr
 import pybtex.database
 
@@ -5,16 +7,17 @@ def get_list_of_cited_keys(texfile):
     list_of_keys = []
     with open(texfile) as f:
         for line in f:
-            pos = line.find('\\cite{', 0)
+            strippedline = "".join(line.split())
+            pos = strippedline.find('\\cite{', 0)
             while (pos != -1):
                 pos = pos + 6
-                endpos = line.find('}', pos)
+                endpos = strippedline.find('}', pos)
                 if endpos == -1:
-                    print('!!WARNING!! found \\cite{ with no matching } on line:', file=sys.stderr)
-                    print('    ', line, file=sys.stderr)
-                keys = line[pos:endpos].split(',')
+                    print('!!WARNING!! found \\cite{ with no matching } on strippedline:', file=sys.stderr)
+                    print('    ', strippedline, file=sys.stderr)
+                keys = strippedline[pos:endpos].split(',')
                 list_of_keys.extend(keys)
-                pos = line.find("\\cite{", endpos)
+                pos = strippedline.find("\\cite{", endpos)
     return list_of_keys
 
 def get_bibliography(bibfile):
