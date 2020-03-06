@@ -1,5 +1,4 @@
 wachter:ipopt
 conte:gmsurvey
 scott:associatingfeatures
-hartmann:marchingtriangles
 wells:mutual
